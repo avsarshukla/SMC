@@ -1,0 +1,153 @@
+[18-04-2026 15:12] Data Dump: <div class="column featured-research">
+                    <h2>Featured Research</h2>
+                    <div class="card">
+                        <div class="card-content">
+                            <p>IEEE SEM-a Kerala Analysis noting ionrevest-atoux Research Analysis</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <p>IEEE SEM creainsir kaxeyroku rmorwxony. Kmobwar-Ivaary that ovnmetnee of pradenties Commmon</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <p>IEM-UEM A atmuorious procers in Sman in Researeh and Ertrannovations and Management Complues Analysis</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div><!-- end home-content -->
+
+        <!-- EXCOM CONTENT -->
+        <div id="excom-content" style="display:none;">
+            <div class="excom-title">
+                <h1>Executive Committee Members</h1>
+            </div>
+
+            <section class="excom-grid">
+                <!-- Row 1 -->
+                <div class="excom-row">
+                    <div class="excom-card">
+                        <img src="blank.png" alt="Member Photo">
+                        <div class="info">
+                            <h3>Name One</h3>
+                            <p class="role">Faculty Advisor</p>
+                            <p class="contact-info">name1@email1.com<br>+91 98000 00001</p>
+                        </div>
+                    </div>
+                    <div class="excom-card">
+                        <img src="blank.png" alt="Member Photo">
+                        <div class="info">
+                            <h3>Name Two</h3>
+                            <p class="role">Chair</p>
+                            <p class="contact-info">name2@email2.com<br>+91 98000 00002</p>
+                        </div>
+                    </div>
+                    <div class="excom-card">
+                        <img src="blank.png" alt="Member Photo">
+                        <div class="info">
+                            <h3>Name Three</h3>
+                            <p class="role">Vice Chair</p>
+                            <p class="contact-info">name3@email3.com<br>+91 98000 00003</p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="excom-divider">
+
+                <!-- Row 2 -->
+                <div class="excom-row">
+                    <div class="excom-card">
+                        <img src="blank.png" alt="Member Photo">
+                        <div class="info">
+                            <h3>Name Four</h3>
+                            <p class="role">Treasurer</p>
+                            <p class="contact-info">name4@email4.com<br>+91 98000 00004</p>
+                        </div>
+                    </div>
+                    <div class="excom-card">
+                        <img src="blank.png" alt="Member Photo">
+                        <div class="info">
+                            <h3>Name Five</h3>
+                            <p class="role">Webmaster</p>
+                            <p class="contact-info">name5@email5.com<br>+91 98000 00005</p>
+                        </div>
+                    </div>
+                    <div class="excom-card">
+                        <img src="blank.png" alt="Member Photo">
+                        <div class="info">
+                            <h3>Name Six</h3>
+                            <p class="role">Recruitment Lead</p>
+                            <p class="contact-info">name6@email6.com<br>+91 98000 00006</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div><!-- end excom-content -->
+
+    </main>
+[18-04-2026 15:12] Data Dump: <footer>
+        <div class="footer-content">
+            <div class="footer-column about-us">
+                <div class="footer-logos">
+                    <img src="ieeelogo.png" alt="IEM Logo" class="footer-logo">
+                </div>
+                <p>IEEE is the world's largest technical professional organization dedicated to advancing technology for the benefit of humanity.</p>
+                <div class="social-icons">
+                    <span>in</span>
+                    <span>X</span>
+                    <span>O</span>
+                </div>
+            </div>
+            
+            <div class="footer-column important-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">IEEE</a></li>
+                    <li><a href="#">IEEE Xplore</a></li>
+                    <li><a href="#">IEEE Standards</a></li>
+                    <li><a href="#">IEEE Spectrum</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column company">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Activities</a></li>
+                    <li><a href="#" onclick="showSection('excom')">Excom</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column contact">
+                <h3>Contact</h3>
+                <p>iemuem@gmail.com</p>
+                <p>9442159433</p>
+                <p>University Area, Plot No. III-B/5, Main Arterial Road, New Town, Action Area-III,
+Kolkata – 700 160, West Bengal, India</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 All Rights Reserved - Build and Maintained by Avsar</p>
+            <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">^</button>
+        </div>
+    </footer>
+
+    <script>
+        function showSection(section) {
+            document.getElementById('home-content').style.display = section === 'home' ? 'block' : 'none';
+            document.getElementById('excom-content').style.display = section === 'excom' ? 'block' : 'none';
+
+            // update active nav link
+            document.getElementById('nav-home').classList.toggle('active', section === 'home');
+            document.getElementById('nav-excom').classList.toggle('active', section === 'excom');
+
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+    </script>
+
+</body>
+</html>
