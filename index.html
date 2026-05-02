@@ -1,13 +1,559 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UEM'K IEEE SMC SBC</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background-color: #f9fafb;
+            color: #1a1a2e;
+            line-height: 1.5;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            background: white;
+            padding: 16px 0;
+            display: flex;
+            justify-content: center;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 48px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            font-size: 16px;
+            font-weight: 500;
+            color: #374151;
+            padding: 8px 20px;
+            border-radius: 24px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: #eef2ff;
+            color: #004a7c;
+        }
+
+        .nav-links a.active {
+            background-color: #004a7c;
+            color: white;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            text-align: center;
+            padding: 60px 20px 30px;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+        }
+
+        .hero-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .hero-logos img {
+            height: 70px;
+            object-fit: contain;
+        }
+
+        .hero-logos .main-logo {
+            height: 90px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.4rem;
+            color: #0a2540;
+            margin-bottom: 12px;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: #4a5568;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: #004a7c;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #00335a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 74, 124, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: #004a7c;
+            border: 2px solid #004a7c;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f0f7ff;
+            transform: translateY(-1px);
+        }
+
+        /* ===== 3-COLUMN CONTENT SECTION ===== */
+        .content-section {
+            display: flex;
+            gap: 30px;
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        .column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .column h2 {
+            font-size: 20px;
+            color: #0a2540;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            border-bottom: 3px solid #004a7c;
+            padding-bottom: 8px;
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            padding: 20px 22px;
+            border: 1px solid #edf2f7;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .row-card {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+        }
+
+        .row-card img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .card-content h3 {
+            font-size: 15px;
+            color: #1a202c;
+            line-height: 1.4;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .card-content p {
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        .date {
+            font-size: 13px !important;
+            color: #8896ab !important;
+            margin-top: 6px;
+        }
+
+        .event-card .card-content h3 {
+            font-size: 16px;
+            color: #0a2540;
+        }
+
+        .event-date,
+        .event-time {
+            font-size: 13px !important;
+            color: #64748b !important;
+        }
+
+        /* ===== EXCOM SECTION ===== */
+        #excom-content {
+            padding: 50px 24px 80px;
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .excom-title {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .excom-title h1 {
+            font-size: 32px;
+            color: #0a2540;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .excom-title h1::after {
+            content: '';
+            display: block;
+            width: 60%;
+            height: 4px;
+            background: #004a7c;
+            border-radius: 4px;
+            margin: 12px auto 0;
+        }
+
+        /* Grid — 3 columns on large, 2 on medium, 1 on small */
+        .excom-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .excom-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
+            padding: 32px 20px 28px;
+            border: 1px solid #edf2f7;
+            text-align: center;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .excom-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 32px rgba(0, 74, 124, 0.10);
+            border-color: #d0e0f0;
+        }
+
+        .excom-card img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 18px;
+            border: 4px solid #e6edf5;
+            transition: border-color 0.2s ease;
+            background-color: #f1f5f9;
+        }
+
+        .excom-card:hover img {
+            border-color: #004a7c;
+        }
+
+        .excom-card h3 {
+            font-size: 18px;
+            color: #0a2540;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .excom-card .role {
+            font-size: 14px;
+            color: #004a7c;
+            font-weight: 600;
+            background: #eef4ff;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin: 6px 0 12px;
+            display: inline-block;
+        }
+
+        .excom-card .contact-info {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background-color: #011936;
+            color: #dce3ed;
+            padding: 52px 24px 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1240px;
+            margin: 0 auto;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .footer-column h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 18px;
+        }
+
+        .about-us p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #b0c4de;
+            margin-bottom: 20px;
+        }
+
+        .footer-logos img {
+            height: 38px;
+            margin-bottom: 16px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 14px;
+        }
+
+        .social-icons span {
+            font-size: 15px;
+            color: #b0c4de;
+            cursor: pointer;
+            background: #1a3250;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .social-icons span:hover {
+            background: #004a7c;
+            color: white;
+        }
+
+        .footer-column ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #b0c4de;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .contact p {
+            color: #b0c4de;
+            font-size: 14px;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-top: 1px solid #1a3250;
+            margin-top: 44px;
+            padding-top: 22px;
+            position: relative;
+            max-width: 1240px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-bottom p {
+            font-size: 13px;
+            color: #8aa3c0;
+        }
+
+        .scroll-top {
+            position: absolute;
+            right: 0;
+            background-color: #1a3250;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .scroll-top:hover {
+            background-color: #004a7c;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .excom-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 28px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 16px;
+            }
+
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-logos {
+                gap: 24px;
+            }
+            .hero-logos img {
+                height: 50px;
+            }
+            .hero-logos .main-logo {
+                height: 70px;
+            }
+
+            .content-section {
+                flex-direction: column;
+                padding: 24px 16px 60px;
+                gap: 32px;
+            }
+
+            .column {
+                width: 100%;
+            }
+
+            .excom-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .excom-card {
+                padding: 24px 16px 20px;
+            }
+
+            .excom-card img {
+                width: 90px;
+                height: 90px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 32px;
+            }
+
+            .footer-column {
+                min-width: unset;
+            }
+
+            .scroll-top {
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 8px;
+            }
+            .nav-links a {
+                font-size: 14px;
+                padding: 6px 14px;
+            }
+
+            .excom-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .excom-title h1 {
+                font-size: 24px;
+            }
+
+            .hero-content h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .row-card {
+                flex-direction: column;
+            }
+            .row-card img {
+                width: 100%;
+                height: 140px;
+            }
+        }
+    </style>
     <link rel="icon" type="image/png" href="logouem.png">
 </head>
 <body>
+
+    <!-- ===== NAVBAR ===== -->
     <header class="navbar">
         <nav>
             <ul class="nav-links">
@@ -21,15 +567,16 @@
 
     <main>
 
-        <!-- HOME CONTENT -->
+        <!-- ===== HOME CONTENT ===== -->
         <div id="home-content">
+
+            <!-- HERO -->
             <section class="hero">
                 <div class="hero-logos">
-                    <img src="iem logo.png" alt="IEM Logo" class="logo">
-                    <img src="blank.png" alt="IEEE SMC Logo" class="logo main-logo">
-                    <img src="logouem.png" alt="UEM Logo" class="logo">
+                    <img src="iem logo.png" alt="IEM Logo">
+                    <img src="blank.png" alt="IEEE SMC Logo" class="main-logo">
+                    <img src="logouem.png" alt="UEM Logo">
                 </div>
-                
                 <div class="hero-content">
                     <h1>Empowering Engineering Excellence</h1>
                     <p>"Scientists study the world as it is; engineers create the world that has never been." — Theodore von Karman</p>
@@ -40,6 +587,7 @@
                 </div>
             </section>
 
+            <!-- 3-COLUMN CONTENT -->
             <section class="content-section">
                 <div class="column latest-news">
                     <h2>Latest News</h2>
@@ -64,21 +612,21 @@
                         <div class="card-content">
                             <h3>📅 Upcoming Events</h3>
                             <p class="event-date">January 14, 2025</p>
-                            <p class="event-time">2:00 pm - 4:00 pm</p>
+                            <p class="event-time">2:00 pm – 4:00 pm</p>
                         </div>
                     </div>
                     <div class="card event-card">
                         <div class="card-content">
                             <h3>📅 Upcoming Events</h3>
                             <p class="event-date">September 18, 2025</p>
-                            <p class="event-time">2:00 am - 2:30 pm</p>
+                            <p class="event-time">2:00 am – 2:30 pm</p>
                         </div>
                     </div>
                     <div class="card event-card">
                         <div class="card-content">
                             <h3>📅 Upcoming Events</h3>
                             <p class="event-date">November 27, 2025</p>
-                            <p class="event-time">2:00 pm - 2:00 pm</p>
+                            <p class="event-time">2:00 pm – 2:00 pm</p>
                         </div>
                     </div>
                 </div>
@@ -104,7 +652,7 @@
             </section>
         </div><!-- end home-content -->
 
-        <!-- EXCOM CONTENT -->
+        <!-- ===== EXCOM CONTENT ===== -->
         <div id="excom-content" style="display:none;">
             <div class="excom-title">
                 <h1>Executive Committee Members</h1>
@@ -114,37 +662,37 @@
                 <div class="excom-card">
                     <img src="blank.png" alt="Member Photo">
                     <h3>Name One</h3>
-                    <p class="role">Faculty Advisor</p>
+                    <span class="role">Faculty Advisor</span>
                     <p class="contact-info">name1@email1.com<br>+91 98000 00001</p>
                 </div>
                 <div class="excom-card">
                     <img src="blank.png" alt="Member Photo">
                     <h3>Name Two</h3>
-                    <p class="role">Chair</p>
+                    <span class="role">Chair</span>
                     <p class="contact-info">name2@email2.com<br>+91 98000 00002</p>
                 </div>
                 <div class="excom-card">
                     <img src="blank.png" alt="Member Photo">
                     <h3>Name Three</h3>
-                    <p class="role">Vice Chair</p>
+                    <span class="role">Vice Chair</span>
                     <p class="contact-info">name3@email3.com<br>+91 98000 00003</p>
                 </div>
                 <div class="excom-card">
                     <img src="blank.png" alt="Member Photo">
                     <h3>Name Four</h3>
-                    <p class="role">Treasurer</p>
+                    <span class="role">Treasurer</span>
                     <p class="contact-info">name4@email4.com<br>+91 98000 00004</p>
                 </div>
                 <div class="excom-card">
                     <img src="blank.png" alt="Member Photo">
                     <h3>Name Five</h3>
-                    <p class="role">Webmaster</p>
+                    <span class="role">Webmaster</span>
                     <p class="contact-info">name5@email5.com<br>+91 98000 00005</p>
                 </div>
                 <div class="excom-card">
                     <img src="blank.png" alt="Member Photo">
                     <h3>Name Six</h3>
-                    <p class="role">Recruitment Lead</p>
+                    <span class="role">Recruitment Lead</span>
                     <p class="contact-info">name6@email6.com<br>+91 98000 00006</p>
                 </div>
             </section>
@@ -152,11 +700,12 @@
 
     </main>
 
+    <!-- ===== FOOTER ===== -->
     <footer>
         <div class="footer-content">
             <div class="footer-column about-us">
                 <div class="footer-logos">
-                    <img src="ieeelogo.png" alt="IEM Logo" class="footer-logo">
+                    <img src="ieeelogo.png" alt="IEEE Logo">
                 </div>
                 <p>IEEE is the world's largest technical professional organization dedicated to advancing technology for the benefit of humanity.</p>
                 <div class="social-icons">
@@ -165,7 +714,7 @@
                     <span>O</span>
                 </div>
             </div>
-            
+
             <div class="footer-column important-links">
                 <h3>Quick Links</h3>
                 <ul>
@@ -190,27 +739,29 @@
                 <h3>Contact</h3>
                 <p>iemuem@gmail.com</p>
                 <p>9442159433</p>
-                <p>University Area, Plot No. III-B/5, Main Arterial Road, New Town, Action Area-III,
-Kolkata – 700 160, West Bengal, India</p>
+                <p>University Area, Plot No. III-B/5, Main Arterial Road, New Town, Action Area-III, Kolkata – 700 160, West Bengal, India</p>
             </div>
         </div>
-        
+
         <div class="footer-bottom">
-            <p>&copy; 2026 All Rights Reserved - Build and Maintained by Avsar</p>
-            <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">^</button>
+            <p>&copy; 2026 All Rights Reserved – Build and Maintained by Avsar</p>
+            <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
         </div>
     </footer>
 
     <script>
         function showSection(section) {
-            document.getElementById('home-content').style.display = section === 'home' ? 'block' : 'none';
-            document.getElementById('excom-content').style.display = section === 'excom' ? 'block' : 'none';
+            const home = document.getElementById('home-content');
+            const excom = document.getElementById('excom-content');
+
+            home.style.display = (section === 'home') ? 'block' : 'none';
+            excom.style.display = (section === 'excom') ? 'block' : 'none';
 
             // update active nav link
             document.getElementById('nav-home').classList.toggle('active', section === 'home');
             document.getElementById('nav-excom').classList.toggle('active', section === 'excom');
 
-            window.scrollTo({top: 0, behavior: 'smooth'});
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 
