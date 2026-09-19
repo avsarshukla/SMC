@@ -1,10 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UEM'K IEEE SMC SBC</title>
+
+    <!-- ===== FAVICON = SMC LOGO ===== -->
+    <link rel="icon" type="image/png" href="smc logo.png">
+
     <style>
         /* ===== RESET & BASE ===== */
         * {
@@ -20,14 +23,12 @@
             line-height: 1.5;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
 
         /* ===== NAVBAR ===== */
         .navbar {
-            background: white;
+            background: #fff;
             padding: 16px 0;
             display: flex;
             justify-content: center;
@@ -40,28 +41,31 @@
         .nav-links {
             display: flex;
             gap: 48px;
-            list-style: none;
-            margin: 0;
-            padding: 0;
+            align-items: center;
         }
 
-        .nav-links a {
+        /* buttons instead of <a href="#"> -> no "#" in the URL */
+        .nav-link {
+            font-family: inherit;
             font-size: 16px;
             font-weight: 500;
             color: #374151;
+            background: none;
+            border: none;
+            cursor: pointer;
             padding: 8px 20px;
             border-radius: 24px;
             transition: all 0.2s ease;
         }
 
-        .nav-links a:hover {
+        .nav-link:hover {
             background-color: #eef2ff;
             color: #004a7c;
         }
 
-        .nav-links a.active {
+        .nav-link.active {
             background-color: #004a7c;
-            color: white;
+            color: #fff;
         }
 
         /* ===== HERO ===== */
@@ -117,12 +121,13 @@
             border-radius: 8px;
             cursor: pointer;
             border: none;
+            font-family: inherit;
             transition: all 0.2s ease;
         }
 
         .btn-primary {
             background-color: #004a7c;
-            color: white;
+            color: #fff;
         }
 
         .btn-primary:hover {
@@ -132,7 +137,7 @@
         }
 
         .btn-secondary {
-            background-color: white;
+            background-color: #fff;
             color: #004a7c;
             border: 2px solid #004a7c;
         }
@@ -142,39 +147,60 @@
             transform: translateY(-1px);
         }
 
-        /* ===== 3-COLUMN CONTENT SECTION ===== */
+        /* ===================================================================
+           3-COLUMN CARD GRID
+           - every column is a grid with FIXED row heights
+           - all 3 columns end up exactly the same total height (459px),
+             so the top and bottom edges of every column line up
+           - Latest News  : 2 cards of 205px  (equal to each other)
+           - Events/Research : 3 cards of 130px (equal to each other)
+             39 + 20 + 205 + 20 + 205 = 489
+             39 + 20 + 130 + 20 + 130 + 20 + 130 = 489  ✔
+           =================================================================== */
         .content-section {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 30px;
             max-width: 1240px;
             margin: 0 auto;
             padding: 40px 24px 80px;
+            align-items: start;
         }
 
         .column {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            display: grid;
+            gap: 20px;               /* unified internal spacing */
         }
 
+        .latest-news {
+            grid-template-rows: 39px 205px 205px;
+        }
+
+        .upcoming-events,
+        .featured-research {
+            grid-template-rows: 39px 130px 130px 130px;
+        }
+
+        /* identical height on every column heading so the rows line up */
         .column h2 {
             font-size: 20px;
+            line-height: 1.4;        /* 28px */
+            height: 39px;            /* 28 + 8 padding + 3 border */
             color: #0a2540;
             font-weight: 700;
             letter-spacing: -0.3px;
             border-bottom: 3px solid #004a7c;
             padding-bottom: 8px;
-            display: inline-block;
-            margin-bottom: 4px;
+            justify-self: start;     /* underline only under the text */
         }
 
         .card {
-            background: white;
+            background: #fff;
             border-radius: 14px;
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-            padding: 20px 22px;
+            padding: 20px 22px;      /* unified internal padding */
             border: 1px solid #edf2f7;
+            overflow: hidden;
             transition: box-shadow 0.2s ease;
         }
 
@@ -226,28 +252,27 @@
             color: #64748b !important;
         }
 
-        /* ===== EXCOM SECTION ===== */
-        #excom-content {
-            padding: 50px 24px 80px;
+        /* ===== SHARED PAGE SECTION (About / ExeCom / Activities) ===== */
+        .page-section {
             max-width: 1240px;
             margin: 0 auto;
+            padding: 50px 24px 80px;
         }
 
-        .excom-title {
+        .page-title {
             text-align: center;
             margin-bottom: 48px;
         }
 
-        .excom-title h1 {
+        .page-title h1 {
             font-size: 32px;
             color: #0a2540;
             font-weight: 700;
             letter-spacing: -0.5px;
-            position: relative;
             display: inline-block;
         }
 
-        .excom-title h1::after {
+        .page-title h1::after {
             content: '';
             display: block;
             width: 60%;
@@ -257,7 +282,78 @@
             margin: 12px auto 0;
         }
 
-        /* Grid — 3 columns on large, 2 on medium, 1 on small */
+        /* ===== ABOUT US ===== */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+        }
+
+        .about-card {
+            background: #fff;
+            border: 1px solid #edf2f7;
+            border-radius: 16px;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
+            padding: 30px 32px;
+        }
+
+        .about-card h2 {
+            font-size: 21px;
+            font-weight: 700;
+            color: #0a2540;
+            letter-spacing: -0.2px;
+            border-bottom: 3px solid #004a7c;
+            padding-bottom: 10px;
+            margin-bottom: 18px;
+            width: fit-content;
+        }
+
+        .about-card p {
+            font-size: 16px;
+            line-height: 1.75;
+            color: #374151;
+            margin-bottom: 16px;
+        }
+
+        .about-card p:last-child { margin-bottom: 0; }
+
+        .about-card ul {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .about-card ul li {
+            position: relative;
+            padding-left: 24px;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #374151;
+        }
+
+        .about-card ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #004a7c;
+        }
+
+        .about-card ul li strong {
+            color: #0a2540;
+        }
+
+        .about-card a.inline-link {
+            color: #004a7c;
+            font-weight: 600;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        /* ===== EXECOM ===== */
         .excom-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -265,7 +361,7 @@
         }
 
         .excom-card {
-            background: white;
+            background: #fff;
             border-radius: 16px;
             box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
             padding: 32px 20px 28px;
@@ -294,9 +390,7 @@
             background-color: #f1f5f9;
         }
 
-        .excom-card:hover img {
-            border-color: #004a7c;
-        }
+        .excom-card:hover img { border-color: #004a7c; }
 
         .excom-card h3 {
             font-size: 18px;
@@ -305,22 +399,57 @@
             margin-bottom: 4px;
         }
 
+        /* --- Role badges: fixed padding + uniform font size --- */
         .excom-card .role {
-            font-size: 14px;
-            color: #004a7c;
-            font-weight: 600;
-            background: #eef4ff;
-            padding: 4px 14px;
-            border-radius: 20px;
-            margin: 6px 0 12px;
             display: inline-block;
+            font-size: 13px;
+            line-height: 1.4;
+            font-weight: 600;
+            color: #004a7c;
+            background: #eef4ff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            min-width: 130px;
+            text-align: center;
+            white-space: nowrap;
+            margin: 6px 0 4px;
         }
 
-        .excom-card .contact-info {
-            font-size: 13px;
-            color: #64748b;
-            line-height: 1.6;
+        /* ===== ACTIVITIES ===== */
+        .posts {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            max-width: 880px;
+            margin: 0 auto;
         }
+
+        .post-card {
+            background: #fff;
+            border: 1px solid #edf2f7;
+            border-radius: 16px;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
+            padding: 30px 34px;
+        }
+
+        .post-body {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #374151;
+            white-space: pre-line;   /* keeps the line breaks from LinkedIn */
+        }
+
+        .post-link {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #004a7c;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+
+        .post-link:hover { border-color: #004a7c; }
 
         /* ===== FOOTER ===== */
         footer {
@@ -346,7 +475,7 @@
         .footer-column h3 {
             font-size: 17px;
             font-weight: 600;
-            color: white;
+            color: #fff;
             margin-bottom: 18px;
         }
 
@@ -365,25 +494,34 @@
         .social-icons {
             display: flex;
             gap: 14px;
+            align-items: center;
         }
 
-        .social-icons span {
-            font-size: 15px;
-            color: #b0c4de;
-            cursor: pointer;
+        .social-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
             background: #1a3250;
-            width: 32px;
-            height: 32px;
+            color: #dce3ed;
+            font-size: 14px;
+            font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            transition: background 0.2s;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
         }
 
-        .social-icons span:hover {
+        .social-icon:hover {
             background: #004a7c;
-            color: white;
+            color: #fff;
+        }
+
+        .social-icon img {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+            display: block;
         }
 
         .footer-column ul {
@@ -392,14 +530,22 @@
             gap: 10px;
         }
 
-        .footer-column ul li a {
+        .footer-column ul li a,
+        .footer-column ul li button {
             color: #b0c4de;
             font-size: 14px;
+            font-family: inherit;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            text-align: left;
             transition: color 0.2s;
         }
 
-        .footer-column ul li a:hover {
-            color: white;
+        .footer-column ul li a:hover,
+        .footer-column ul li button:hover {
+            color: #fff;
         }
 
         .contact p {
@@ -425,13 +571,22 @@
         .footer-bottom p {
             font-size: 13px;
             color: #8aa3c0;
+            text-align: center;
         }
+
+        .footer-bottom a {
+            color: #b0c4de;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .footer-bottom a:hover { color: #fff; }
 
         .scroll-top {
             position: absolute;
             right: 0;
             background-color: #1a3250;
-            color: white;
+            color: #fff;
             border: none;
             border-radius: 50%;
             width: 34px;
@@ -444,112 +599,60 @@
             transition: background 0.2s;
         }
 
-        .scroll-top:hover {
-            background-color: #004a7c;
-        }
+        .scroll-top:hover { background-color: #004a7c; }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 1024px) {
-            .excom-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 28px;
+        @media (max-width: 1080px) {
+            /* fixed heights would clip text here -> stack into one column */
+            .content-section {
+                grid-template-columns: 1fr;
+                gap: 32px;
             }
+            .latest-news,
+            .upcoming-events,
+            .featured-research {
+                grid-template-rows: none;
+            }
+            .column h2 { height: auto; }
+            .card { min-height: 0; }
+        }
+
+        @media (max-width: 900px) {
+            .about-grid { grid-template-columns: 1fr; }
+            .excom-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
         }
 
         @media (max-width: 768px) {
-            .nav-links {
-                gap: 16px;
-            }
+            .nav-links { gap: 12px; }
+            .nav-link { font-size: 14px; padding: 7px 14px; }
 
-            .hero-content h1 {
-                font-size: 1.8rem;
-            }
+            .hero-content h1 { font-size: 1.8rem; }
+            .hero-logos { gap: 24px; }
+            .hero-logos img { height: 50px; }
+            .hero-logos .main-logo { height: 70px; }
 
-            .hero-logos {
-                gap: 24px;
-            }
-            .hero-logos img {
-                height: 50px;
-            }
-            .hero-logos .main-logo {
-                height: 70px;
-            }
+            .content-section { padding: 24px 16px 60px; }
 
-            .content-section {
-                flex-direction: column;
-                padding: 24px 16px 60px;
-                gap: 32px;
-            }
+            .excom-card { padding: 24px 16px 20px; }
+            .excom-card img { width: 90px; height: 90px; }
 
-            .column {
-                width: 100%;
-            }
+            .post-card { padding: 24px 20px; }
 
-            .excom-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-            }
-
-            .excom-card {
-                padding: 24px 16px 20px;
-            }
-
-            .excom-card img {
-                width: 90px;
-                height: 90px;
-            }
-
-            .footer-content {
-                flex-direction: column;
-                gap: 32px;
-            }
-
-            .footer-column {
-                min-width: unset;
-            }
-
-            .scroll-top {
-                right: 10px;
-            }
+            .footer-content { flex-direction: column; gap: 32px; }
+            .footer-column { min-width: unset; }
+            .scroll-top { right: 10px; }
         }
 
         @media (max-width: 480px) {
-            .nav-links {
-                gap: 8px;
-            }
-            .nav-links a {
-                font-size: 14px;
-                padding: 6px 14px;
-            }
+            .excom-grid { grid-template-columns: 1fr; gap: 20px; }
+            .page-title h1 { font-size: 24px; }
+            .hero-content h1 { font-size: 1.5rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
 
-            .excom-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .excom-title h1 {
-                font-size: 24px;
-            }
-
-            .hero-content h1 {
-                font-size: 1.5rem;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .row-card {
-                flex-direction: column;
-            }
-            .row-card img {
-                width: 100%;
-                height: 140px;
-            }
+            .row-card { flex-direction: column; }
+            .row-card img { width: 100%; height: 140px; }
         }
     </style>
-    <link rel="icon" type="image/png" href="logouem.png">
 </head>
 <body>
 
@@ -557,57 +660,64 @@
     <header class="navbar">
         <nav>
             <ul class="nav-links">
-                <li><a href="#" onclick="showSection('home')" class="active" id="nav-home">Home</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#" onclick="showSection('excom')" id="nav-excom">Excom</a></li>
-                <li><a href="#">Activities</a></li>
+                <li><button class="nav-link active" data-nav="home">Home</button></li>
+                <li><button class="nav-link" data-nav="about">About Us</button></li>
+                <li><button class="nav-link" data-nav="excom">ExeCom</button></li>
+                <li><button class="nav-link" data-nav="activities">Activities</button></li>
             </ul>
         </nav>
     </header>
 
     <main>
 
-        <!-- ===== HOME CONTENT ===== -->
+        <!-- ============================================================
+             HOME
+             ============================================================ -->
         <div id="home-content">
 
-            <!-- HERO -->
             <section class="hero">
                 <div class="hero-logos">
                     <img src="iem logo.png" alt="IEM Logo">
-                    <img src="smc logo.png alt="IEEE SMC Logo" class="main-logo">
+                    <img src="smc logo.png" alt="IEEE SMC Logo" class="main-logo">
                     <img src="logouem.png" alt="UEM Logo">
                 </div>
                 <div class="hero-content">
                     <h1>Empowering Engineering Excellence</h1>
                     <p>"Scientists study the world as it is; engineers create the world that has never been." — Theodore von Karman</p>
                     <div class="hero-buttons">
-                        <button class="btn btn-primary">Join Us</button>
-                        <button class="btn btn-secondary">View Activities</button>
+                        <button class="btn btn-primary" data-nav="about">Join Us</button>
+                        <button class="btn btn-secondary" data-nav="activities">View Activities</button>
                     </div>
                 </div>
             </section>
 
-            <!-- 3-COLUMN CONTENT -->
             <section class="content-section">
+
+                <!-- ---------- LATEST NEWS (2 tall cards) ---------- -->
                 <div class="column latest-news">
                     <h2>Latest News</h2>
+
                     <div class="card row-card">
-                        <img src="inaug photos.png" alt="News Image">
+                        <img src="building vis.jpg" alt="Building Intelligent Vision Systems workshop">
                         <div class="card-content">
-                            <h3>The IEEE Systems, Man, and Cybernetics (SMC) Student Branch Chapter was successfully inaugurated at IIT Kharagpur Research Park on 19th February 2026.</h3>
-                            <p class="date">📅 1 month ago</p>
+                            <h3>Hands-on learning workshop – "Building Intelligent Vision Systems"</h3>
+                            <p class="date" data-date="2026-08-19">📅 1 month ago</p>
                         </div>
                     </div>
-                    <div class="card">
+
+                    <div class="card row-card">
+                        <img src="inaug photos.png" alt="Inauguration of the IEEE SMC Student Branch Chapter">
                         <div class="card-content">
-                            <h3>IEM Institute of Engineering & Management University Methods lioationshios and Development of finanong Exonmunity, Kerala 696001</h3>
-                            <p class="date">📅 5 days ago</p>
+                            <h3>The IEEE Systems, Man, and Cybernetics (SMC) Student Branch Chapter was successfully inaugurated at IIT Kharagpur Research Park on 19th February 2026.</h3>
+                            <p class="date" data-date="2026-02-19">📅 6 months ago</p>
                         </div>
                     </div>
                 </div>
 
+                <!-- ---------- UPCOMING EVENTS (3 short cards) ---------- -->
                 <div class="column upcoming-events">
                     <h2>Upcoming Events</h2>
+
                     <div class="card event-card">
                         <div class="card-content">
                             <h3>📅 Upcoming Events</h3>
@@ -615,123 +725,253 @@
                             <p class="event-time">2:00 pm – 4:00 pm</p>
                         </div>
                     </div>
+
                     <div class="card event-card">
                         <div class="card-content">
                             <h3>📅 Upcoming Events</h3>
                             <p class="event-date">September 18, 2025</p>
-                            <p class="event-time">2:00 am – 2:30 pm</p>
+                            <p class="event-time">2:00 pm – 4:30 pm</p>
                         </div>
                     </div>
+
                     <div class="card event-card">
                         <div class="card-content">
                             <h3>📅 Upcoming Events</h3>
                             <p class="event-date">November 27, 2025</p>
-                            <p class="event-time">2:00 pm – 2:00 pm</p>
+                            <p class="event-time">2:00 pm – 4:00 pm</p>
                         </div>
                     </div>
                 </div>
 
+                <!-- ---------- FEATURED RESEARCH (3 short cards) ---------- -->
                 <div class="column featured-research">
                     <h2>Featured Research</h2>
+
                     <div class="card">
                         <div class="card-content">
-                            <p>IEEE SEM-a Kerala Analysis noting ionrevest-atoux Research Analysis</p>
+                            <p>Intelligent vision systems: from classical image processing to deep learning architectures.</p>
                         </div>
                     </div>
+
                     <div class="card">
                         <div class="card-content">
-                            <p>IEEE SEM creainsir kaxeyroku rmorwxony. Kmobwar-Ivaary that ovnmetnee of pradenties Commmon</p>
+                            <p>Human–machine systems and cybernetics: modelling, control and interaction design.</p>
                         </div>
                     </div>
+
                     <div class="card">
                         <div class="card-content">
-                            <p>IEM-UEM A atmuorious procers in Sman in Researeh and Ertrannovations and Management Complues Analysis</p>
+                            <p>Systems science and engineering: simulation, optimisation and decision support.</p>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div><!-- end home-content -->
 
-        <!-- ===== EXCOM CONTENT ===== -->
+            </section>
+        </div><!-- /home-content -->
+
+
+        <!-- ============================================================
+             ABOUT US
+             ============================================================ -->
+        <div id="about-content" style="display:none;">
+            <section class="page-section">
+                <div class="page-title">
+                    <h1>About Us</h1>
+                </div>
+
+                <div class="about-grid">
+
+                    <article class="about-card">
+                        <h2>About IEEE</h2>
+                        <p>IEEE is the world's largest professional association dedicated to advancing technological innovation and excellence for the benefit of humanity. IEEE and its members inspire a global community through IEEE's highly cited publications, conferences, technology standards, and professional and educational activities.</p>
+                        <p>IEEE, pronounced "Eye-triple-E," stands for the Institute of Electrical and Electronics Engineers. The association is chartered under this name and it is the full legal name. To learn more about the association's name, please read the
+                            <a class="inline-link" href="https://www.ieee.org/about/ieee-history" target="_blank" rel="noopener">History of IEEE</a>.
+                        </p>
+                    </article>
+
+                    <article class="about-card">
+                        <h2>Our Chapter</h2>
+                        <p>The IEEE Systems, Man, and Cybernetics Student Branch Chapter at the University of Engineering &amp; Management, Kolkata, was formally inaugurated on 19th February 2026 at the IIT Kharagpur Research Park, marking a significant milestone in fostering research, innovation, and professional excellence.</p>
+                        <p>The ceremony was conducted from 4:20 PM to 5:10 PM in the presence of distinguished academicians, faculty members, and students.</p>
+                    </article>
+
+                    <article class="about-card">
+                        <h2>Mission</h2>
+                        <p>The mission of the Systems, Man, and Cybernetics Society is to serve the interests of its members and the community at large by promoting the theory, practice, and interdisciplinary aspects of systems science and engineering, human-machine systems, and cybernetics. It is accomplished through conferences, publications, and other activities that contribute to the professional needs of its members.</p>
+                    </article>
+
+                    <article class="about-card">
+                        <h2>Vision</h2>
+                        <p>The vision of the Systems, Man, and Cybernetics Society is to be recognized as the world leading society for the advancement of theory and application in systems science and engineering, human-machine systems, and cybernetics.</p>
+                    </article>
+
+                    <article class="about-card">
+                        <h2>Values</h2>
+                        <p>The following fundamental values provide the foundation for all SMC Society activities:</p>
+                        <ul>
+                            <li><strong>Membership:</strong> Maximize the value of being a member.</li>
+                            <li><strong>Professionalism:</strong> Advance knowledge and professional development.</li>
+                            <li><strong>Excellence:</strong> Deliver high quality and relevant services and products.</li>
+                            <li><strong>Integrity:</strong> Act with honesty and fairness.</li>
+                            <li><strong>Collaboration:</strong> Achieve results and excellence through teamwork.</li>
+                            <li><strong>Communication:</strong> Promote honest and transparent interactions.</li>
+                            <li><strong>Collaboration and Engagement:</strong> Embrace and increase collaboration and engagement of members to drive participation.</li>
+                            <li><strong>Empowerment:</strong> Empower volunteers and value their contributions.</li>
+                            <li><strong>Equality:</strong> Provide equal opportunities to all members.</li>
+                            <li><strong>Respect:</strong> Practice respectfulness in all relationships.</li>
+                        </ul>
+                    </article>
+
+                    <article class="about-card">
+                        <h2>Fields of Interest</h2>
+                        <ul>
+                            <li>Development of systems engineering technology including problem definition methods, modeling, and simulation, methods of system experimentation, human factors engineering, data and methods, systems design techniques and test and evaluation methods.</li>
+                            <li>Integration of the theories of communication, control, cybernetics, stochastics, optimization, and system structure towards the formulation of a general theory of systems.</li>
+                            <li>Application at hardware and software levels to the analysis and design of biological, ecological, socio-economic, social service, computer information, and operational man-machine systems.</li>
+                        </ul>
+                    </article>
+
+                    <article class="about-card">
+                        <h2>Benefits to Students</h2>
+                        <ul>
+                            <li>Exposure to the advancement of theory and application in systems science and engineering, human-machine systems, and cybernetics.</li>
+                            <li>Opportunity to engage with the SMC Society community through conferences, publications, and other activities.</li>
+                            <li>Access to activities that contribute to professional development and the professional needs of members.</li>
+                            <li>Opportunity to develop knowledge and professional development through SMC Society activities.</li>
+                            <li>Enhanced readiness for careers in systems engineering, human-machine systems, cybernetics, and related interdisciplinary fields.</li>
+                        </ul>
+                    </article>
+
+                </div>
+            </section>
+        </div><!-- /about-content -->
+
+
+        <!-- ============================================================
+             EXECOM
+             ============================================================ -->
         <div id="excom-content" style="display:none;">
-            <div class="excom-title">
-                <h1>Executive Committee Members</h1>
-            </div>
+            <section class="page-section">
+                <div class="page-title">
+                    <h1>Executive Committee Members</h1>
+                </div>
 
-            <section class="excom-grid">
-                <div class="excom-card">
-                    <img src="SuP.png" alt="Member Photo">
-                    <h3>Name One</h3>
-                    <span class="role">Faculty Advisor</span>
-                    <p class="contact-info">name1@email1.com<br>+91 98000 00001</p>
-                </div>
-                <div class="excom-card">
-                    <img src="blank.png" alt="Member Photo">
-                    <h3>Name Two</h3>
-                    <span class="role">Chair</span>
-                    <p class="contact-info">name2@email2.com<br>+91 98000 00002</p>
-                </div>
-                <div class="excom-card">
-                    <img src="blank.png" alt="Member Photo">
-                    <h3>Name Three</h3>
-                    <span class="role">Vice Chair</span>
-                    <p class="contact-info">name3@email3.com<br>+91 98000 00003</p>
-                </div>
-                <div class="excom-card">
-                    <img src="blank.png" alt="Member Photo">
-                    <h3>Name Four</h3>
-                    <span class="role">Treasurer</span>
-                    <p class="contact-info">name4@email4.com<br>+91 98000 00004</p>
-                </div>
-                <div class="excom-card">
-                    <img src="blank.png" alt="Member Photo">
-                    <h3>Name Five</h3>
-                    <span class="role">Webmaster</span>
-                    <p class="contact-info">name5@email5.com<br>+91 98000 00005</p>
-                </div>
-                <div class="excom-card">
-                    <img src="blank.png" alt="Member Photo">
-                    <h3>Name Six</h3>
-                    <span class="role">Recruitment Lead</span>
-                    <p class="contact-info">name6@email6.com<br>+91 98000 00006</p>
+                <div class="excom-grid">
+
+                    <div class="excom-card">
+                        <img src="SuP.png" alt="Subhojit Paul">
+                        <h3>Subhojit Paul</h3>
+                        <span class="role">Faculty Advisor</span>
+                    </div>
+
+                    <div class="excom-card">
+                        <img src="Srishti.png" alt="Srishti Bhattacharjee">
+                        <h3>Srishti Bhattacharjee</h3>
+                        <span class="role">Chair</span>
+                    </div>
+
+                    <div class="excom-card">
+                        <img src="blank.png" alt="Dipayan Saha">
+                        <h3>Dipayan Saha</h3>
+                        <span class="role">Vice Chair</span>
+                    </div>
+
+                    <div class="excom-card">
+                        <img src="blank.png" alt="Ashmita Chakraborty">
+                        <h3>Ashmita Chakraborty</h3>
+                        <span class="role">Secretary</span>
+                    </div>
+
+                    <div class="excom-card">
+                        <img src="blank.png" alt="Ranodip Ghosh">
+                        <h3>Ranodip Ghosh</h3>
+                        <span class="role">Treasurer</span>
+                    </div>
+
+                    <div class="excom-card">
+                        <img src="blank.png" alt="Ananya Paul">
+                        <h3>Ananya Paul</h3>
+                        <span class="role">Webmaster</span>
+                    </div>
+
                 </div>
             </section>
-        </div><!-- end excom-content -->
+        </div><!-- /excom-content -->
+
+
+        <!-- ============================================================
+             ACTIVITIES
+             ============================================================ -->
+        <div id="activities-content" style="display:none;">
+            <section class="page-section">
+                <div class="page-title">
+                    <h1>Activities</h1>
+                </div>
+
+                <div class="posts">
+
+                    <article class="post-card">
+                        <div class="post-body">A Proud Milestone for UEM Kolkata! ✨
+
+🎗️ The IEEE Systems, Man, and Cybernetics (SMC) Student Branch Chapter was successfully inaugurated at the University of Engineering &amp; Management (UEM), Kolkata, at IIT Kharagpur Research Park on 19th February 2026.
+
+👏 It was a privilege to host this milestone event alongside our distinguished Chief Guest, Dr. Susanta Ray, and esteemed faculty members, including Dr. Abir Chattopadhyay, Dr. Nilanjan Chatterjee, Dr. Buddhadeb Pradhan, Dr. Anay Ghosh, Subhojit Paul and other faculty members. Together with our motivated students, we are embarking on a transformative journey dedicated to research, innovation, and professional excellence under the global banner of the IEEE SMC Society.
+
+🙏 Grateful to our mentor, Dr. Satyajit Chakrabarti, and all the dignitaries for their guidance and encouragement. Looking forward to organizing impactful workshops, seminars, competitions, and research initiatives through the IEEE SMC Student Branch Chapter in collaboration with Innovation and Entrepreneurship Development Cell (Dept. of CSE Data Science), IEM, UEM, Kolkata and IEEE Systems, Man, and Cybernetics Society (SMCS) and IEEE Kolkata Section.
+
+Together, we move forward towards innovation and excellence. 🚀
+
+SRISHTI BHATTACHARJEE, Dipayan Saha, Ranodip Ghosh, Ashmita Chakraborty, Ananya Paul, Ankan Peyada, Prama banik, Ruparna Maji</div>
+                        <a class="post-link" href="https://lnkd.in/p/gjBr5iVF" target="_blank" rel="noopener">View post on LinkedIn →</a>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="post-body">We extend deep gratitude to our esteemed resource instructor Prof. Dr. Anay Ghosh for guiding the hands on learning workshop - "Building Intelligent Vision Systems" - with such clarity and dedication.</div>
+                        <a class="post-link" href="https://lnkd.in/p/gAwGmCES" target="_blank" rel="noopener">View post on LinkedIn →</a>
+                    </article>
+
+                </div>
+            </section>
+        </div><!-- /activities-content -->
 
     </main>
+
 
     <!-- ===== FOOTER ===== -->
     <footer>
         <div class="footer-content">
+
             <div class="footer-column about-us">
                 <div class="footer-logos">
-                    <img src="ieeelogo.png" alt="IEEE Logo">
+                    <img src="ieeelogo.jpg" alt="IEEE Logo">
                 </div>
                 <p>IEEE is the world's largest technical professional organization dedicated to advancing technology for the benefit of humanity.</p>
                 <div class="social-icons">
-                    <span>in</span>
-                    <span>X</span>
-                    <span>O</span>
+                    <a class="social-icon" href="https://www.linkedin.com/in/ieee-smc-sbc-uem-kolkata/" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
+                    <span class="social-icon" aria-label="X">X</span>
+                    <a class="social-icon" href="https://avsarshukla.github.io/SMC/#" target="_blank" rel="noopener" aria-label="Website">
+                        <img src="website-svg.svg" alt="Website">
+                    </a>
                 </div>
             </div>
 
             <div class="footer-column important-links">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="#">IEEE</a></li>
-                    <li><a href="#">IEEE Xplore</a></li>
-                    <li><a href="#">IEEE Standards</a></li>
-                    <li><a href="#">IEEE Spectrum</a></li>
+                    <li><a href="https://www.ieee.org/" target="_blank" rel="noopener">IEEE</a></li>
+                    <li><a href="https://ieeexplore.ieee.org/Xplore/home.jsp" target="_blank" rel="noopener">IEEE Xplore</a></li>
+                    <li><a href="https://standards.ieee.org/" target="_blank" rel="noopener">IEEE Standards</a></li>
+                    <li><a href="https://spectrum.ieee.org/" target="_blank" rel="noopener">IEEE Spectrum</a></li>
                 </ul>
             </div>
 
             <div class="footer-column company">
-                <h3>Company</h3>
+                <h3>Society</h3>
                 <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Activities</a></li>
-                    <li><a href="#" onclick="showSection('excom')">Excom</a></li>
-                    <li><a href="#">Contact Us</a></li>
+                    <li><button data-nav="home">Home</button></li>
+                    <li><button data-nav="about">About Us</button></li>
+                    <li><button data-nav="excom">ExCom</button></li>
+                    <li><button data-nav="activities">Activities</button></li>
                 </ul>
             </div>
 
@@ -741,30 +981,78 @@
                 <p>9442159433</p>
                 <p>University Area, Plot No. III-B/5, Main Arterial Road, New Town, Action Area-III, Kolkata – 700 160, West Bengal, India</p>
             </div>
+
         </div>
 
         <div class="footer-bottom">
-            <p>&copy; 2026 All Rights Reserved – Build and Maintained by Avsar</p>
-            <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+            <p>&copy; <span id="year">2026</span> All Rights Reserved – Build and Maintained by
+                <a href="https://www.linkedin.com/in/avsar-shukla/" target="_blank" rel="noopener">Avsar</a>
+            </p>
+            <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">↑</button>
         </div>
     </footer>
 
+
     <script>
-        function showSection(section) {
-            const home = document.getElementById('home-content');
-            const excom = document.getElementById('excom-content');
+        (function () {
+            'use strict';
 
-            home.style.display = (section === 'home') ? 'block' : 'none';
-            excom.style.display = (section === 'excom') ? 'block' : 'none';
+            /* ---------- Simple page router (no "#" in the URL) ---------- */
+            var PAGES = ['home', 'about', 'excom', 'activities'];
 
-            // update active nav link
-            document.getElementById('nav-home').classList.toggle('active', section === 'home');
-            document.getElementById('nav-excom').classList.toggle('active', section === 'excom');
+            function showSection(name) {
+                PAGES.forEach(function (page) {
+                    var el = document.getElementById(page + '-content');
+                    if (el) el.style.display = (page === name) ? 'block' : 'none';
+                });
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+                document.querySelectorAll('.nav-link').forEach(function (btn) {
+                    btn.classList.toggle('active', btn.dataset.nav === name);
+                });
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            document.querySelectorAll('[data-nav]').forEach(function (el) {
+                el.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    showSection(el.dataset.nav);
+                });
+            });
+
+            /* ---------- Auto "time ago" ---------- */
+            function timeAgo(iso) {
+                var then = new Date(iso + 'T00:00:00');
+                var now = new Date();
+                if (isNaN(then) || then > now) return 'just now';
+
+                var months = (now.getFullYear() - then.getFullYear()) * 12
+                           + (now.getMonth() - then.getMonth());
+                if (now.getDate() < then.getDate()) months--;
+
+                if (months >= 12) {
+                    var y = Math.floor(months / 12);
+                    return y + (y === 1 ? ' year ago' : ' years ago');
+                }
+                if (months >= 1) {
+                    return months + (months === 1 ? ' month ago' : ' months ago');
+                }
+
+                var days = Math.floor((now - then) / 86400000);
+                if (days >= 1) return days + (days === 1 ? ' day ago' : ' days ago');
+                return 'today';
+            }
+
+            document.querySelectorAll('[data-date]').forEach(function (el) {
+                el.textContent = '📅 ' + timeAgo(el.dataset.date);
+            });
+
+            /* ---------- Auto copyright year ---------- */
+            var yearEl = document.getElementById('year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+        })();
     </script>
 
 </body>
 </html>
-
